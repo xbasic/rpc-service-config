@@ -50,14 +50,6 @@ static void mgos_config_get_handler(struct mg_rpc_request_info *ri,
   mgos_conf_emit_cb(&mgos_sys_config, NULL, schema, false, &send_mbuf, NULL,
                     NULL);
 
-  /*
-   * TODO(dfrank): figure out why frozen handles %.*s incorrectly here,
-   * fix it, and remove this hack with adding NULL byte
-   */
-  mbuf_append(&send_mbuf, "", 1);
-  mg_rpc_send_responsef(ri, "%s", send_mbuf.buf);
-  ri = NULL;
-
   mbuf_free(&send_mbuf);
 
   (void) cb_arg;
